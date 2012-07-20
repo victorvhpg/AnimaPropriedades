@@ -1,0 +1,131 @@
+ 
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <style type="text/css" >
+            canvas{
+                border:1px solid #000;
+            }
+
+        </style>
+        <script type="text/javascript" src="AnimaPropriedades.js"></script>
+        <script type="text/javascript" >
+            /**
+             * @victorvhpg
+             * 19/07/2012
+             *
+             */
+            
+            
+            window.onload = function(){
+                var canvas = document.createElement("canvas");
+                canvas.width = 700;
+                canvas.height = 500;
+                document.querySelector("body").appendChild(canvas);
+                var ctx = canvas.getContext("2d");
+                
+            
+           
+                var blocoA = {
+                    x: 50 ,
+                    y :20 ,
+                    r: 0 ,
+                    verde : 0
+                  
+                };
+                var blocoB = {
+                    x: 0 ,
+                    y :0 ,
+                    r: 0 ,
+                    verde : 255,
+                    largura : 10
+                  
+                };
+               
+                var desenha = function(){
+                    ctx.clearRect(0, 0,   canvas.width , canvas.height);
+                  
+                    ctx.save();
+                    ctx.fillStyle = "rgb(0,"+parseInt(blocoA.verde)+",0)";
+                    ctx.translate(blocoA.x,blocoA.y);
+                    ctx.rotate( blocoA.r*Math.PI/180);
+                    ctx.fillRect(100/-2 , 40/-2 , 100, 40);
+                    ctx.restore();
+                  
+                    ctx.save();
+                    ctx.fillStyle = "rgb(0,"+parseInt(blocoB.verde)+",0)";
+                  
+                     
+                    ctx.fillRect(blocoB.x ,  blocoB.y , blocoB.largura, 40);
+                    ctx.restore();
+                   
+                   
+                };
+                setInterval(function(){
+                    desenha();
+                },1000/60);
+                //==========================================================================
+               
+               
+                AnimaPropriedades.anima( {
+                    g : {
+                        de :  blocoA.verde ,
+                        ate : 255
+                    },
+                    x : {
+                        de :  blocoA.x ,
+                        ate : 650
+                    } ,
+                 
+                    y : {
+                        de :  blocoA.y,
+                        ate : 480
+                    },
+                    rotate : {
+                        de :  blocoA.r,
+                        ate :900
+                    }
+                } , 5000).aCadaPasso(function(propriedades){
+                    blocoA.x = propriedades.x.atual;
+                    blocoA.y = propriedades.y.atual;
+                    blocoA.r = propriedades.rotate.atual;
+                    blocoA.verde = propriedades.g.atual; 
+                }).onAnimacaoCompleta(function(propriedades){
+                    console.log("FIM");
+                }).iniciar();
+                
+                //========================================================
+                AnimaPropriedades.anima( {
+                    g : {
+                        de :  blocoB.verde ,
+                        ate : 0
+                    },
+                    largura : {
+                        de: blocoB.largura,
+                        ate : 600
+                    },
+                 
+                    y : {
+                        de :  blocoB.y,
+                        ate : 460
+                    } 
+  
+                } , 2000).aCadaPasso(function(propriedades){                   
+                    blocoB.y = propriedades.y.atual;
+                    blocoB.verde = propriedades.g.atual;
+                    blocoB.largura = propriedades.largura.atual;
+                     
+                }).onAnimacaoCompleta(function(propriedades){
+                    console.log("FIMMMMMM");
+                }).iniciar();
+               
+            };
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
