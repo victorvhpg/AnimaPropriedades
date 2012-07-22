@@ -1,7 +1,7 @@
  
   @victorvhpg
   AnimaPropriedades 
-  faz animacao linear das propriedades de um objeto qualquer de acordo com o tempo decorrido 
+  faz animacao  das propriedades de um objeto qualquer de acordo com o tempo decorrido 
   
   #javascript
   

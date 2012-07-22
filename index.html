@@ -29,8 +29,8 @@
             
            
                 var blocoA = {
-                    x: 50 ,
-                    y :20 ,
+                    x: 150 ,
+                    y :100 ,
                     r: 0 ,
                     verde : 0
                   
@@ -81,19 +81,20 @@
                  
                     y : {
                         de :  blocoA.y,
-                        ate : 480
+                        ate : 380
                     },
                     rotate : {
                         de :  blocoA.r,
                         ate :900
                     }
-                } , 5000).aCadaPasso(function(propriedades){
+                } , 1000,"easeOutQuint").aCadaPasso(function(propriedades){
                     blocoA.x = propriedades.x.atual;
                     blocoA.y = propriedades.y.atual;
                     blocoA.r = propriedades.rotate.atual;
                     blocoA.verde = propriedades.g.atual; 
                 }).onAnimacaoCompleta(function(propriedades){
                     console.log("FIM");
+                     this.reiniciaInverso();
                 }).iniciar();
                 
                 //========================================================
@@ -104,21 +105,23 @@
                     },
                     largura : {
                         de: blocoB.largura,
-                        ate : 600
+                        ate : 400
                     },
                  
                     y : {
                         de :  blocoB.y,
-                        ate : 460
+                        ate : 360
                     } 
   
-                } , 2000).aCadaPasso(function(propriedades){                   
+                } , 4000,"easeOutBounce").aCadaPasso(function(propriedades){                   
                     blocoB.y = propriedades.y.atual;
                     blocoB.verde = propriedades.g.atual;
                     blocoB.largura = propriedades.largura.atual;
                      
                 }).onAnimacaoCompleta(function(propriedades){
                     console.log("FIMMMMMM");
+                   
+                    this.reiniciaInverso();
                 }).iniciar();
                
             };
