@@ -151,6 +151,7 @@ var AnimaPropriedades =function(){
 //================================================      
 //Equações easing foram retiradas  de 
 // https://github.com/madrobby/scripty2/blob/master/src/effects/transitions/penner.js
+// http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js
 // http://www.robertpenner.com/easing_terms_of_use.html
 //===================================================
         
@@ -277,6 +278,20 @@ var EASING  = {
 
     elastic: function(pos) {
         return -1 * Math.pow(4,-8*pos) * Math.sin((pos*6-1)*(2*Math.PI)/2) + 1;
+    },
+    elasticInOut: function ( pos ) {
+
+        var s, a = 0.1, p = 0.4;
+        if ( pos === 0 ) return 0;
+        if ( pos === 1 ) return 1;
+        if ( !a || a < 1 ) {
+            a = 1;
+            s = p / 4;
+        }
+        else s = p * Math.asin( 1 / a ) / ( 2 * Math.PI );
+        if ( ( pos *= 2 ) < 1 ) return - 0.5 * ( a * Math.pow( 2, 10 * ( pos -= 1 ) ) * Math.sin( ( pos - s ) * ( 2 * Math.PI ) / p ) );
+        return a * Math.pow( 2, -10 * ( pos -= 1 ) ) * Math.sin( ( pos - s ) * ( 2 * Math.PI ) / p ) * 0.5 + 1;
+
     },
 
     swingFromTo: function(pos) {

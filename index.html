@@ -17,22 +17,28 @@
              * 19/07/2012
              *   http://fiddle.jshell.net/victorvhpg/246rW/show/
              */
-               
+            
+         
             
             window.onload = function(){
                 var canvas = document.createElement("canvas");
-                canvas.width = 700;
+                canvas.width = 800;
                 canvas.height = 500;
                 document.querySelector("body").appendChild(canvas);
                 var ctx = canvas.getContext("2d");
                 
-            
+                var vetEasing = [];
+                for(var e in EASING){
+                    vetEasing[vetEasing.length] = e;
+                }
+                var c=0,c2=0;
            
                 var blocoA = {
                     x: 150 ,
                     y :100 ,
                     r: 0 ,
-                    verde : 0
+                    verde : 0,
+                    texto : "OI"
                   
                 };
                 var blocoB = {
@@ -40,7 +46,8 @@
                     y :0 ,
                     r: 0 ,
                     verde : 255,
-                    largura : 10
+                    largura : 10,
+                    texto : "OI"
                   
                 };
                
@@ -52,6 +59,8 @@
                     ctx.translate(blocoA.x,blocoA.y);
                     ctx.rotate( blocoA.r*Math.PI/180);
                     ctx.fillRect(100/-2 , 40/-2 , 100, 40);
+                    ctx.font = "15px Calibri";
+                    ctx.fillText(blocoA.texto, 100/-2 , (40/-2)-1);
                     ctx.restore();
                   
                     ctx.save();
@@ -59,6 +68,8 @@
                   
                      
                     ctx.fillRect(blocoB.x ,  blocoB.y , blocoB.largura, 40);
+                    ctx.font = "15px Calibri";
+                    ctx.fillText(blocoB.texto, blocoB.x ,  blocoB.y-1);
                     ctx.restore();
                    
                    
@@ -85,16 +96,19 @@
                     },
                     rotate : {
                         de :  blocoA.r,
-                        ate :900
+                        ate :720
                     }
-                } , 1000,"easeOutQuint").aCadaPasso(function(propriedades){
+                } , 4000,"elasticInOut").aCadaPasso(function(propriedades){
                     blocoA.x = propriedades.x.atual;
                     blocoA.y = propriedades.y.atual;
                     blocoA.r = propriedades.rotate.atual;
                     blocoA.verde = propriedades.g.atual; 
+                    blocoA.texto = this.efeito ;
                 }).onAnimacaoCompleta(function(propriedades){
                     console.log("FIM");
-                     this.reiniciaInverso();
+                    this.efeito = vetEasing[c2++ %  vetEasing.length];
+                  
+                    this.reiniciaInverso();
                 }).iniciar();
                 
                 //========================================================
@@ -113,14 +127,17 @@
                         ate : 360
                     } 
   
-                } , 4000,"easeOutBounce").aCadaPasso(function(propriedades){                   
+                } ,3000,"easeOutBounce").aCadaPasso(function(propriedades){                   
                     blocoB.y = propriedades.y.atual;
                     blocoB.verde = propriedades.g.atual;
                     blocoB.largura = propriedades.largura.atual;
+                    blocoB.texto = this.efeito ;
+                    
                      
                 }).onAnimacaoCompleta(function(propriedades){
                     console.log("FIMMMMMM");
-                   
+                    this.efeito = vetEasing[c++ % vetEasing.length];
+                    
                     this.reiniciaInverso();
                 }).iniciar();
                
